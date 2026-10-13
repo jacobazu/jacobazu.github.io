@@ -64,29 +64,24 @@
   <h2>Current projects</h2>
 
   <div class="project">
-    <h3>DK1 day-ahead prices</h3>
+    <h3>DK1 day-ahead prices <span class="wip">(R)</span></h3>
     <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
-    <p>Tomorrow's hourly electricity prices in western Denmark, with 50% and 90% ranges, made every
-      morning before the auction. It runs by itself every day. Every forecast is saved before the
-      outcome is known, so the dashboard shows the bad days too.</p>
-    <p class="note"><b>Working on:</b> why the forecasts run about 6 €/MWh too low, mostly at the evening
-      peak on expensive days. I also added VaR and expected shortfall for the battery's revenue, and I'm
-      watching how they hold up live.</p>
+    <p>Tomorrow's hourly electricity prices in western Denmark, with 50% and 90% ranges. Made every morning
+      before the auction and never changed afterwards.</p>
   </div>
 
   <div class="project">
-    <h3>DK1 battery trading <span class="wip">(WIP)</span></h3>
+    <h3>DK1 battery trading <span class="wip">(Python)</span></h3>
     <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
-    <p>Python on top of the price forecasts. It plans a battery from each day's forecast and measures
-      the risk of the plan.</p>
-    <p class="note"><b>Working on:</b> taking trading fees and battery wear off the P&amp;L, so it shows
-      what the battery would really keep.</p>
+    <p>Plans a 2 MWh battery from each day's price forecast, with revenue at risk, stress tests, fees and
+      battery wear. Live P&amp;L since 13 Oct 2026.</p>
   </div>
 
   <div class="project">
-    <h3>DK1 imbalance <span class="wip">(WIP)</span></h3>
-    <p>The probability that the grid is regulated up, down or not at all over the next hours, and what
-      that does to the price.</p>
+    <h3>DK1 imbalance <span class="wip">(R), WIP</span></h3>
+    <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a></p>
+    <p>The chance the grid is regulated up, down or not at all over the next hours, and what that does to
+      the price.</p>
   </div>
 
   <h2>Thesis</h2>
