@@ -44,6 +44,7 @@
   .links a + a::before { content: "·"; color: var(--muted); margin: 0 8px; }
   .note { color: var(--muted); font-size: 15.5px; }
   .note b { color: var(--text); font-weight: 500; }
+  .wip { color: var(--muted); font-weight: 400; }
   details { margin-top: 48px; color: var(--muted); }
   summary { cursor: pointer; font-size: 15px; }
   details img { display: block; width: 240px; max-width: 100%; margin-top: 14px; border-radius: 10px; }
@@ -76,7 +77,7 @@
   </div>
 
   <div class="project">
-    <h3>DK1 imbalance</h3>
+    <h3>DK1 imbalance <span class="wip">(WIP)</span></h3>
     <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-imbalance-forecasting">code</a></p>
     <p>The probability that the grid is regulated up, down or not at all over the next hours, and what
       that does to the price.</p>
