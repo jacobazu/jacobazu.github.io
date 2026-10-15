@@ -11,100 +11,233 @@
 <style>
   :root {
     --bg: #faf7f2;
+    --bg2: #f3ede4;
     --text: #1f2328;
     --muted: #6b7280;
-    --line: #e7e0d6;
+    --line: #e2d9cc;
     --accent: #c2410c;
+    --side: #1c1f24;
+    --side-text: #c9ced6;
+    --tag: #ece4d8;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #16181c; --text: #e6e6e6; --muted: #9aa0a8; --line: #2c3036; --accent: #fb923c; }
+    :root { --bg: #16181c; --bg2: #1b1e23; --text: #e6e6e6; --muted: #9aa0a8; --line: #2c3036;
+            --accent: #fb923c; --side: #0f1114; --tag: #2a2e35; }
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
     font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-    font-size: 17px;
-    line-height: 1.6;
+    font-size: 16.5px;
+    line-height: 1.65;
   }
-  main { max-width: 680px; margin: 0 auto; padding: 64px 20px 80px; }
-  h1 { font-size: 30px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
-  .sub { color: var(--muted); margin: 0 0 32px; }
-  h2 {
-    font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--muted); margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
-  }
-  p { margin: 0 0 14px; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .project { margin: 0 0 28px; }
-  .project h3 { font-size: 18px; font-weight: 600; margin: 0 0 2px; }
-  .links { font-size: 15px; margin: 0 0 8px; }
-  .links a + a::before { content: "·"; color: var(--muted); margin: 0 8px; }
-  .note { color: var(--muted); font-size: 15.5px; }
+
+  /* sidebar */
+  aside {
+    position: fixed; inset: 0 auto 0 0; width: 270px; background: var(--side); color: var(--side-text);
+    padding: 40px 28px; display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .avatar { width: 112px; height: 112px; border-radius: 50%; border: 6px solid #2c3036; background: var(--accent);
+            color: #fff; display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 600;
+            letter-spacing: 0.02em; flex: 0 0 auto; }
+  aside .name { color: #fff; font-size: 22px; font-weight: 600; margin: 16px 0 2px; }
+  aside .role { font-size: 13.5px; color: #9aa0a8; margin: 0 0 18px; }
+  .gh { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: #2c3036; color: #fff;
+        align-items: center; justify-content: center; }
+  .gh:hover { background: var(--accent); }
+  nav { margin-top: 36px; width: 100%; text-align: left; }
+  nav a { display: flex; align-items: center; gap: 12px; color: var(--side-text); padding: 10px 14px;
+          border-radius: 8px; font-size: 15px; margin-bottom: 4px; }
+  nav a:hover, nav a.active { color: #fff; background: #2a2e35; text-decoration: none; }
+  nav a.active svg, nav a:hover svg { color: var(--accent); }
+  nav svg { width: 18px; height: 18px; color: #7d848e; flex: 0 0 18px; }
+  .menu { display: none; }
+
+  /* content */
+  main { margin-left: 270px; }
+  section { padding: 88px 8vw 72px; }
+  section:nth-of-type(even) { background: var(--bg2); }
+  .wrap { max-width: 760px; }
+  h2 { font-size: 26px; font-weight: 600; margin: 0 0 32px; padding-bottom: 14px; position: relative; }
+  h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 48px; height: 3px; background: var(--accent);
+              border-radius: 2px; }
+  #home { min-height: 70vh; display: flex; align-items: center; }
+  #home h1 { font-size: 44px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.015em; }
+  #home .sub { color: var(--muted); margin: 0 0 28px; font-size: 18px; }
+  #home .intro { font-size: 20px; max-width: 560px; margin: 0; }
+
+  /* projects and thesis as a timeline */
+  .item { position: relative; padding: 0 0 44px 30px; border-left: 2px solid var(--line); }
+  .item:last-of-type { padding-bottom: 6px; }
+  .item::before { content: ""; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; border-radius: 50%;
+                  background: var(--bg); border: 2px solid var(--accent); }
+  section:nth-of-type(even) .item::before { background: var(--bg2); }
+  .item h3 { font-size: 19px; font-weight: 600; margin: 0 0 6px; line-height: 1.4; }
+  .tags { margin: 0 0 10px; }
+  .tag { display: inline-block; font-size: 12.5px; color: var(--muted); background: var(--tag); border-radius: 999px;
+         padding: 1px 10px; margin-right: 6px; }
+  .item p { margin: 0 0 10px; }
+  .note { color: var(--muted); font-size: 15px; }
   .note b { color: var(--text); font-weight: 500; }
-  .wip { color: var(--muted); font-weight: 400; }
-  details { margin-top: 48px; color: var(--muted); }
-  summary { cursor: pointer; font-size: 15px; }
-  details img { display: block; width: 240px; max-width: 100%; margin-top: 14px; border-radius: 10px; }
+  .links { font-size: 15px; }
+  .links a + a::before { content: "·"; color: var(--muted); margin: 0 8px; }
+  .when { color: var(--muted); font-size: 14.5px; }
+
+  /* the cat: click to fold out */
+  details { color: var(--muted); margin-top: 28px; }
+  summary { cursor: pointer; display: inline-flex; align-items: center; gap: 8px; color: var(--accent);
+            font-weight: 500; list-style: none; user-select: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor;
+                    border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .2s; }
+  details[open] summary::before { transform: rotate(45deg); }
+  summary:hover { text-decoration: underline; }
+  details img { display: block; width: 240px; max-width: 100%; margin-top: 16px; border-radius: 12px; }
   details p { margin-top: 10px; font-size: 15px; }
-  footer { margin-top: 56px; }
-  footer a { color: var(--muted); display: inline-flex; }
-  footer a:hover { color: var(--text); }
+  details[open] img, details[open] p { animation: fold .3s ease-out; }
+  @keyframes fold { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+  /* phones: the sidebar becomes a bar at the top with a menu */
+  @media (max-width: 860px) {
+    aside { position: sticky; top: 0; width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center;
+            padding: 10px 18px; text-align: left; z-index: 10; gap: 0 12px; }
+    .avatar { width: 40px; height: 40px; border-width: 2px; font-size: 15px; }
+    aside .name { font-size: 17px; margin: 0; }
+    aside .role { display: none; }
+    .gh { width: 32px; height: 32px; margin-left: auto; }
+    .menu { display: inline-flex; background: none; border: 0; color: #fff; padding: 6px; cursor: pointer; }
+    nav { display: none; margin-top: 8px; }
+    nav.open { display: block; }
+    main { margin-left: 0; }
+    section { padding: 56px 22px 48px; scroll-margin-top: 60px; }
+    #home { min-height: 0; }
+    #home h1 { font-size: 34px; }
+    #home .intro { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
+<aside>
+  <div class="avatar" aria-hidden="true">JA</div>
+  <p class="name">JacobAzu</p>
+  <p class="role">MSc Mathematics-Economics</p>
+  <a class="gh" href="https://github.com/jacobazu" aria-label="GitHub" title="GitHub"><svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg></a>
+  <button class="menu" aria-label="Menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+  <nav>
+    <a href="#home" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+    <a href="#projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg>Projects</a>
+    <a href="#experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>Experience</a>
+    <a href="#education"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 8l10-5 10 5-10 5z"/><path d="M6 10v5c3 2.5 9 2.5 12 0v-5"/></svg>Education</a>
+    <a href="#interests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 20h6M8 17h8M10 17l-1-6h6l-1 6M12 4v3M10.5 5.5h3"/><circle cx="12" cy="9" r="2"/></svg>Interests</a>
+  </nav>
+</aside>
+
 <main>
-  <h1>JacobAzu</h1>
-  <p class="sub">MSc Mathematics-Economics, Aalborg University (2026)</p>
+  <section id="home">
+    <div class="wrap">
+      <h1>Hi, I'm Jacob.</h1>
+      <p class="sub">MSc Mathematics-Economics, Aalborg University (2026)</p>
+      <p class="intro">I live in Aarhus with my cat. Just building stuff that piques my interest.</p>
+    </div>
+  </section>
 
-  <p>Hi, I'm Jacob. I live in Aarhus with my cat. Just building stuff that piques my interest.</p>
+  <section id="projects">
+    <div class="wrap">
+      <h2>Current projects</h2>
 
-  <h2>Current projects</h2>
+      <div class="item">
+        <h3>DK1 day-ahead prices</h3>
+        <p class="tags"><span class="tag">R</span><span class="tag">live</span></p>
+        <p>Tomorrow's hourly electricity prices in western Denmark, with 50% and 90% ranges. Made every morning
+          before the auction and never changed afterwards.</p>
+        <p class="note"><b>Working on:</b> the forecast is too low mainly in the evening peak on expensive days,
+          when gas plants usually set the price, so gas and CO₂ prices could be worth looking into.</p>
+        <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
+      </div>
 
-  <div class="project">
-    <h3>DK1 day-ahead prices <span class="wip">(R)</span></h3>
-    <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
-    <p>Tomorrow's hourly electricity prices in western Denmark, with 50% and 90% ranges. Made every morning
-      before the auction and never changed afterwards.</p>
-    <p class="note"><b>Working on:</b> the forecast is too low mainly in the evening peak on expensive days,
-      when gas plants usually set the price, so gas and CO₂ prices could be worth looking into.</p>
-  </div>
+      <div class="item">
+        <h3>DK1 battery trading</h3>
+        <p class="tags"><span class="tag">Python</span><span class="tag">live</span></p>
+        <p>Plans a 2 MWh battery from each day's price forecast, with revenue at risk, stress tests, fees and
+          battery wear. Live P&amp;L since 13 Oct 2026.</p>
+        <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
+      </div>
 
-  <div class="project">
-    <h3>DK1 battery trading <span class="wip">(Python)</span></h3>
-    <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
-    <p>Plans a 2 MWh battery from each day's price forecast, with revenue at risk, stress tests, fees and
-      battery wear. Live P&amp;L since 13 Oct 2026.</p>
-  </div>
+      <div class="item">
+        <h3>DK1 imbalance</h3>
+        <p class="tags"><span class="tag">R</span><span class="tag">WIP</span></p>
+        <p>The chance the grid is regulated up, down or not at all over the next hours, and what that does to
+          the price.</p>
+        <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a></p>
+      </div>
 
-  <div class="project">
-    <h3>DK1 imbalance <span class="wip">(R), WIP</span></h3>
-    <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a></p>
-    <p>The chance the grid is regulated up, down or not at all over the next hours, and what that does to
-      the price.</p>
-  </div>
-    <div class="project">
-    <h3>DK1 wind forecasting MLOps <span class="wip">(Python), WIP</span></h3>
-    <p>Energinet's wind forecasts comes after the auction. How close can we get with our own forecast?</p>
-  </div>
+      <div class="item">
+        <h3>DK1 wind forecasting MLOps</h3>
+        <p class="tags"><span class="tag">Python</span><span class="tag">WIP</span></p>
+        <p>Energinet's wind forecasts come after the auction. How close can we get with our own forecast?</p>
+      </div>
+    </div>
+  </section>
 
-  <h2>Thesis</h2>
-  <p>Choosing predictors for forecasts of crude oil returns and volatility, with LASSO, Elastic Net and
-    boosting.</p>
+  <section id="experience">
+    <div class="wrap">
+      <h2>Experience</h2>
+      <div class="item">
+        <h3>Teaching assistant, mathematics</h3>
+        <p class="when">Aalborg University · 2025–2026, part time</p>
+        <p>Teaching assistant in mathematics courses.</p>
+      </div>
+      <div class="item">
+        <h3>Maths tutor</h3>
+        <p class="when">GoTutor · 2020–2026</p>
+        <p>Private tutoring in mathematics.</p>
+      </div>
+    </div>
+  </section>
 
-  <details>
-    <summary>The cat</summary>
-    <img src="cat.jpg" alt="My cat as a kitten, lying on his back">
-    <p>His name is Azu, hence the GitHub name.</p>
-  </details>
+  <section id="education">
+    <div class="wrap">
+      <h2>Education</h2>
+      <div class="item">
+        <h3>MSc Mathematics-Economics</h3>
+        <p class="when">Aalborg University · 2026</p>
+        <p>Courses include stochastic calculus, computational and Bayesian statistics, econometrics, mixed effects
+          models and duration analysis.</p>
+      </div>
+    </div>
+  </section>
 
-  <footer>
-    <a href="https://github.com/jacobazu" aria-label="GitHub" title="GitHub">
-      <svg width="26" height="26" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
-    </a>
-  </footer>
+  <section id="interests">
+    <div class="wrap">
+      <h2>Interests</h2>
+      <p>I like playing chess.</p>
+      <details>
+        <summary>The cat</summary>
+        <img src="cat.jpg" alt="My cat as a kitten, lying on his back">
+        <p>His name is Azu, hence the GitHub name.</p>
+      </details>
+    </div>
+  </section>
 </main>
+
+<script>
+  // menu button on phones
+  const nav = document.querySelector("nav");
+  document.querySelector(".menu").onclick = () => nav.classList.toggle("open");
+  nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => nav.classList.remove("open")));
+  // highlight the section in view
+  const links = [...nav.querySelectorAll("a")];
+  const seen = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  document.querySelectorAll("main section").forEach(s => seen.observe(s));
+</script>
 </body>
 </html>
