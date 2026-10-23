@@ -163,11 +163,12 @@
   <section id="projects">
     <div class="wrap">
       <h2>Current projects</h2>
+      <p class="note">Click "dashboard" under a project to open it.</p>
 
       <div class="item">
         <h3>DK1 day-ahead prices</h3>
         <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
-        <p>Tomorrow's hourly electricity prices in western Denmark, with 50% and 90% ranges. Made every morning
+        <p>A forecast of tomorrow's hourly electricity prices in western Denmark, with ranges. Made every morning
           before the auction and never changed afterwards.</p>
         <p class="note"><b>Note:</b> gas and CO₂ worth looking into.</p>
         <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
@@ -176,33 +177,32 @@
       <div class="item">
         <h3>DK1 battery trading</h3>
         <p class="tags"><span class="tag">Python</span><span class="tag live">Live</span></p>
-        <p>Paper trading: a simulated 2 MWh battery, no physical asset. It buys in the cheap hours and sells in the
-          expensive ones, planned every day on my price forecast. What it would have earned since 13 Oct 2026, the risk
-          of each day's plan, and what fees and wear cost.</p>
+        <p>Paper trading with a simulated 2 MWh battery, no physical asset. It buys in the cheap hours and sells in
+          the expensive ones, planned every day on my price forecast, after fees and wear.</p>
         <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
       </div>
 
       <div class="item">
         <h3>DK1 imbalance</h3>
         <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
-        <p>The chance the grid is regulated up, down or not at all over the next hours, and what that does to
-          the price.</p>
+        <p>A forecast of whether the grid is regulated up, down or not at all in the coming hours, and what that
+          does to the imbalance price.</p>
         <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-imbalance-forecasting">code</a></p>
       </div>
 
       <div class="item">
         <h3>PPA pricing and risk</h3>
         <p class="tags"><span class="tag">Python</span><span class="tag">WIP</span></p>
-        <p>What is a fair fixed price for a 10-year PPA with a solar park or wind farm in DK1, SE3, Finland and
-          Germany, and which side carries which risk?</p>
+        <p>A fair fixed price for a 10-year PPA with a solar park or wind farm in DK1, SE3, Finland and Germany, and
+          which side carries which risk.</p>
         <p class="links"><a href="https://github.com/jacobazu/ppa">code</a></p>
       </div>
 
       <div class="item">
         <h3>DK1 wind and solar forecasting</h3>
         <p class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">WIP</span></p>
-        <p>Energinet's wind and solar forecasts come after the auction. How close can we get with our own, made before it,
-          and can it run like a production model? Another dashboard. Woohoo!</p>
+        <p>My own forecast of wind and solar power in DK1, made before the auction and compared with Energinet's, which
+          comes after it.</p>
       </div>
     </div>
   </section>
