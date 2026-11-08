@@ -107,6 +107,20 @@
   details[open] img, details[open] p { animation: fold .3s ease-out; }
   @keyframes fold { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
+  /* a folder of projects: click to fold out */
+  details.folder { color: var(--text); margin: 0 0 36px; border: 1px solid var(--line); border-radius: 14px;
+                   padding: 18px 22px; background: var(--bg); }
+  section:nth-of-type(even) details.folder { background: var(--bg); }
+  details.folder > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; color: var(--text);
+                             font-size: 19px; font-weight: 600; }
+  details.folder > summary::before { align-self: center; color: var(--accent); }
+  details.folder > summary:hover { text-decoration: none; color: var(--accent); }
+  details.folder > summary .sub { font-size: 15px; font-weight: 400; color: var(--muted); }
+  details.folder > summary .tag { font-weight: 400; align-self: center; margin: 0; }
+  details.folder[open] > summary { margin-bottom: 26px; }
+  details.folder .item { animation: fold .3s ease-out; }
+  details.folder .item:last-of-type { padding-bottom: 6px; }
+
   /* phones: the sidebar becomes a bar at the top with a menu */
   @media (max-width: 860px) {
     aside { position: sticky; top: 0; width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center;
@@ -163,32 +177,43 @@
   <section id="projects">
     <div class="wrap">
       <h2>Current projects</h2>
-      <p class="note">Click "dashboard" under a project to open it.</p>
+      <p class="note">Click a folder to fold it out, and "dashboard" under a project to open it.</p>
 
-      <div class="item">
-        <h3>DK1 day-ahead prices</h3>
-        <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
-        <p>A forecast of tomorrow's hourly electricity prices in western Denmark, with ranges. Made every morning
-          before the auction and never changed afterwards.</p>
-        <p class="note"><b>Note:</b> gas and CO₂ worth looking into.</p>
-        <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
-      </div>
+      <details class="folder">
+        <summary>DK1 power market <span class="tag live">3 live</span><span class="sub">4 projects · prices, battery trading, imbalance, offshore wind</span></summary>
 
-      <div class="item">
-        <h3>DK1 battery trading</h3>
-        <p class="tags"><span class="tag">Python</span><span class="tag live">Live</span></p>
-        <p>A simulated 2 MWh battery, no physical asset. It buys in the cheap hours and sells in the expensive ones,
-          planned every day on my price forecast, after fees and wear.</p>
-        <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
-      </div>
+        <div class="item">
+          <h3>DK1 day-ahead prices</h3>
+          <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
+          <p>A forecast of tomorrow's hourly electricity prices in western Denmark, with ranges. Made every morning
+            before the auction and never changed afterwards.</p>
+          <p class="note"><b>Note:</b> gas and CO₂ worth looking into.</p>
+          <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
+        </div>
 
-      <div class="item">
-        <h3>DK1 imbalance</h3>
-        <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
-        <p>A forecast of whether the grid is regulated up, down or not at all in the coming hours, and what that
-          does to the imbalance price.</p>
-        <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-imbalance-forecasting">code</a></p>
-      </div>
+        <div class="item">
+          <h3>DK1 battery trading</h3>
+          <p class="tags"><span class="tag">Python</span><span class="tag live">Live</span></p>
+          <p>A simulated 2 MWh battery, no physical asset. It buys in the cheap hours and sells in the expensive ones,
+            planned every day on my price forecast, after fees and wear.</p>
+          <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
+        </div>
+
+        <div class="item">
+          <h3>DK1 imbalance</h3>
+          <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
+          <p>A forecast of whether the grid is regulated up, down or not at all in the coming hours, and what that
+            does to the imbalance price.</p>
+          <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-imbalance-forecasting">code</a></p>
+        </div>
+
+        <div class="item">
+          <h3>DK1 offshore wind forecast</h3>
+          <p class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">WIP</span></p>
+          <p>My own forecast of DK1 offshore wind power, made before the auction and compared with Energinet's, which
+            comes after it. Onshore wind and solar were tried too, but didn't beat Energinet.</p>
+        </div>
+      </details>
 
       <div class="item">
         <h3>PPA pricing and risk</h3>
@@ -198,12 +223,6 @@
         <p class="links"><a href="https://jacobazu.github.io/ppa/">case study</a><a href="https://github.com/jacobazu/ppa">code</a></p>
       </div>
 
-      <div class="item">
-        <h3>DK1 offshore wind forecast</h3>
-        <p class="tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">WIP</span></p>
-        <p>My own forecast of DK1 offshore wind power, made before the auction and compared with Energinet's, which
-          comes after it. Onshore wind and solar were tried too, but didn't beat Energinet.</p>
-      </div>
     </div>
   </section>
 
