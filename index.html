@@ -184,8 +184,9 @@
         <div class="item">
           <h3>DK1 day-ahead prices</h3>
           <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
-          <p>A forecast of tomorrow's hourly electricity prices in western Denmark, with ranges. Made every morning
-            before the auction and never changed afterwards.</p>
+          <p>A forecast of tomorrow's hourly electricity prices in western Denmark, with ranges and a line on how risky
+            the day looks. Made every morning before the auction and never changed afterwards; the track record shows
+            where the price left the range.</p>
           <p class="note"><b>Note:</b> gas and CO₂ worth looking into.</p>
           <p class="links"><a href="https://jacobazu.github.io/dk1-price-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-price-forecasting">code</a></p>
         </div>
@@ -194,15 +195,16 @@
           <h3>DK1 battery trading</h3>
           <p class="tags"><span class="tag">Python</span><span class="tag live">Live</span></p>
           <p>A simulated 2 MWh battery, no physical asset. It buys in the cheap hours and sells in the expensive ones,
-            planned every day on my price forecast, after fees and wear.</p>
+            planned every day on my price forecast, after fees and wear. Each plan comes with its risk: what we expect
+            to make and what a bad day (1 in 20) looks like. Also compares day-ahead trading with the reserve markets.</p>
           <p class="links"><a href="https://jacobazu.github.io/dk1-battery-trade/">dashboard</a><a href="https://github.com/jacobazu/dk1-battery-trade">code</a></p>
         </div>
 
         <div class="item">
           <h3>DK1 imbalance</h3>
           <p class="tags"><span class="tag">R</span><span class="tag live">Live</span></p>
-          <p>A forecast of whether the grid is regulated up, down or not at all in the coming hours, and what that
-            does to the imbalance price.</p>
+          <p>A forecast of whether the grid is regulated up, down or not at all in the coming hours, and what the
+            imbalance price would be on each side.</p>
           <p class="links"><a href="https://jacobazu.github.io/dk1-imbalance-forecasting/">dashboard</a><a href="https://github.com/jacobazu/dk1-imbalance-forecasting">code</a></p>
         </div>
 
