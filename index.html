@@ -43,8 +43,7 @@
     padding: 40px 28px; display: flex; flex-direction: column; align-items: center; text-align: center;
   }
   .avatar { width: 112px; height: 112px; border-radius: 50%; border: 6px solid #2c3036; background: var(--accent);
-            color: #fff; display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 600;
-            letter-spacing: 0.02em; flex: 0 0 auto; }
+            display: block; object-fit: cover; flex: 0 0 auto; }
   aside .name { color: #fff; font-size: 22px; font-weight: 600; margin: 16px 0 2px; }
   aside .role { font-size: 13.5px; color: #9aa0a8; margin: 0 0 18px; }
   .gh { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: #2c3036; color: #fff;
@@ -125,7 +124,7 @@
   @media (max-width: 860px) {
     aside { position: sticky; top: 0; width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center;
             padding: 10px 16px; text-align: left; z-index: 10; gap: 0 10px; }
-    .avatar { width: 40px; height: 40px; border-width: 2px; font-size: 15px; }
+    .avatar { width: 40px; height: 40px; border-width: 2px; }
     aside .name { font-size: 16px; margin: 0; }
     aside .role { display: none; }
     .gh { width: 30px; height: 30px; }
@@ -139,13 +138,13 @@
     #home h1 { font-size: 34px; }
     #home .intro { font-size: 18px; }
   }
-  /* very small phones: no room for the initials */
+  /* very small phones: no room for the photo */
   @media (max-width: 359px) { .avatar { display: none; } }
 </style>
 </head>
 <body>
 <aside>
-  <div class="avatar" aria-hidden="true">JA</div>
+  <img class="avatar" src="jacob.jpg" alt="Jacob Qazizada">
   <p class="name">Jacob Qazizada</p>
   <p class="role">MSc Mathematics-Economics</p>
   <div class="social">
