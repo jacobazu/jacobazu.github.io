@@ -8,190 +8,197 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
 <style>
-  :root { --ink: #1f2328; --grey: #6b7280; --line: #efe6dc; --orange: #f97316; --blue: #2563eb; --green: #16a34a;
-          --amber: #d97706; --red: #dc2626; }
+  :root { --ink: #1f2328; --grey: #6b7280; --line: #efe6dc; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #faf6f1; color: var(--ink); font: 15px/1.5 "IBM Plex Sans", "Segoe UI", Arial, sans-serif; }
-  header { background: #fff; border-bottom: 1px solid var(--line); padding: 12px 20px; display: flex; flex-wrap: wrap;
-           align-items: baseline; gap: 6px 18px; }
+  body { margin: 0; background: #faf6f1; color: var(--ink); font: 15px/1.45 "IBM Plex Sans", "Segoe UI", Arial, sans-serif; }
+  header { background: #fff; border-bottom: 1px solid var(--line); padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   header h1 { font-size: 18px; margin: 0; }
-  header .links { margin-left: auto; font-size: 14px; }
-  a { color: #c2410c; }
-  .banner { background: #fff7ed; border-bottom: 1px solid #fed7aa; color: #9a3412; font-size: 14px; padding: 8px 20px; }
-  main { max-width: 1280px; margin: 0 auto; padding: 18px 16px 40px; }
+  header .when { color: var(--grey); font-size: 14px; }
+  header .tag { font-size: 12px; color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 99px; padding: 1px 10px; }
+  header a { margin-left: auto; color: #c2410c; font-size: 14px; }
+  main { max-width: 1240px; margin: 0 auto; padding: 18px 16px 40px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 960px) { .grid3 { grid-template-columns: 1fr; } }
   .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 4px 14px rgba(120,72,20,.06);
           padding: 14px 16px; margin-bottom: 16px; min-width: 0; }
-  .card-title { font-weight: 600; margin-bottom: 8px; }
-  .plain { border-left: 4px solid var(--green); }
-  .plain-day { color: var(--grey); font-size: 13px; }
-  .plain-text { font-size: 20px; font-weight: 600; margin: 2px 0 4px; }
-  .sub { color: var(--grey); font-size: 13px; }
-  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-  .kpi { border-left: 4px solid var(--accent); }
-  .kpi-label { color: var(--grey); font-size: 13px; }
-  .kpi-value { font-size: 24px; font-weight: 600; margin: 2px 0; }
-  .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-  .grid2.wide { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
-  @media (max-width: 900px) { .grid2, .grid2.wide { grid-template-columns: 1fr; } }
-  .scroll { overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; font-size: 14px; }
-  th, td { text-align: left; padding: 7px 10px 7px 0; border-bottom: 1px solid #f1ebe4; vertical-align: top; }
-  th { color: var(--grey); font-weight: 500; font-size: 13px; }
-  .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  tr.total td { font-weight: 600; border-top: 2px solid var(--line); }
-  .light { display: inline-flex; align-items: baseline; gap: 6px; font-size: 13px; font-weight: 600; }
-  .light::before { flex: 0 0 auto; }
-  .light::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
-  .light.green { color: var(--green); } .light.amber { color: var(--amber); } .light.red { color: var(--red); }
-  .light.off { color: var(--grey); }
-  .note { color: var(--grey); font-size: 13px; margin: 8px 0 0; }
+  .card.off { opacity: .55; }
+  .top { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--grey); }
+  .top a { color: inherit; text-decoration: none; } .top a:hover { color: var(--ink); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; display: inline-block; }
+  .big { font-size: 30px; font-weight: 650; font-variant-numeric: tabular-nums; margin: 2px 0 0; }
+  .big small { font-size: 14px; font-weight: 500; color: var(--grey); margin-left: 6px; }
+  .big .bad { font-size: 16px; color: #dc2626; margin-left: 10px; font-weight: 600; }
+  .chart { height: 170px; }
+  .strip { display: flex; gap: 3px; margin-top: 6px; height: 18px; }
+  .strip i { flex: 1 1 0; max-width: 12px; border-radius: 2px; }
+  .lbl { font-size: 12px; color: var(--grey); margin-top: 6px; }
+  h2 { font-size: 13px; font-weight: 600; color: var(--grey); margin: 6px 2px 10px; text-transform: uppercase; letter-spacing: .05em; }
+  .health .row { display: grid; grid-template-columns: minmax(140px, 220px) 1fr 64px; grid-template-areas: "nm bar v";
+                 gap: 6px 14px; align-items: center; margin-bottom: 12px; }
+  .health .nm { grid-area: nm; } .health .bar { grid-area: bar; } .health .v { grid-area: v; }
+  .health .nm { font-size: 14px; line-height: 1.2; } .health .nm span { display: block; font-size: 12px; color: var(--grey); }
+  .health .v { font-weight: 650; text-align: right; font-variant-numeric: tabular-nums; }
+  @media (max-width: 600px) {
+    .health .row { grid-template-columns: 1fr 64px; grid-template-areas: "nm v" "bar bar"; margin-bottom: 16px; }
+  }
+  .bar { position: relative; height: 16px; background: #f4efe9; border-radius: 8px; }
+  .bar .fill { position: absolute; top: 0; height: 100%; border-radius: 8px; opacity: .28; }
+  .bar .pt { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid #fff; }
+  .bar .aim { position: absolute; top: -4px; width: 2px; height: 24px; background: var(--ink); transform: translateX(-1px); }
+  .bar .ci { position: absolute; top: 6px; height: 4px; border-radius: 2px; }
+  .key { font-size: 12px; color: var(--grey); margin-top: 14px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .key b { display: inline-block; vertical-align: middle; margin-right: 5px; }
   footer { color: var(--grey); font-size: 12px; text-align: center; padding-bottom: 24px; }
+  footer a { color: inherit; }
 </style>
 </head>
 <body>
-<header><h1>DK1 desk</h1><span class="sub">every project in one book</span>
-<span class="links"><a href="https://jacobazu.github.io/">jacobazu.github.io</a></span></header>
-<div class="banner">Paper money, no real trades. Every position was saved before the prices were known and never changed.</div>
-<main id="main"><div class="card">Loading the book…</div></main>
+<header><h1>DK1 desk</h1><span class="when" id="when"></span><span class="tag">paper money</span>
+<a href="https://jacobazu.github.io/">jacobazu.github.io</a></header>
+<main id="main"><div class="card">Loading…</div></main>
 <footer id="foot"></footer>
 <script>
-// each project publishes a small desk.json when its dashboard updates; this page only puts them together
-const SOURCES = [
-  { key: "price",     name: "Day-ahead price forecast",       url: "https://jacobazu.github.io/dk1-price-forecasting/desk.json" },
-  { key: "battery",   name: "Battery, day-ahead",             url: "https://jacobazu.github.io/dk1-battery-trade/desk.json", colour: "#f97316" },
-  { key: "imbalance", name: "Day-ahead to imbalance (paper)", url: "https://jacobazu.github.io/dk1-imbalance-forecasting/desk.json", colour: "#2563eb" },
-  { key: "wind",      name: "Offshore wind forecast",         url: "https://jacobazu.github.io/dk1-renewables-forecasting/desk.json" },
-];
-const WORD = { green: "On target", amber: "Watch", red: "Off target", off: "Not live" };
-const eur = x => (x < 0 ? "−" : "") + Math.abs(Math.round(x)).toLocaleString("en-GB") + " €";
-const round5 = x => 5 * Math.round(x / 5);
+// each dashboard publishes a desk.json when it updates; this page only draws them side by side
+const SRC = {
+  price:     "https://jacobazu.github.io/dk1-price-forecasting/desk.json",
+  battery:   "https://jacobazu.github.io/dk1-battery-trade/desk.json",
+  imbalance: "https://jacobazu.github.io/dk1-imbalance-forecasting/desk.json",
+};
+const C = { ink: "#1f2328", grey: "#6b7280", soft: "#e7ded3", grid: "#f1ebe4", orange: "#f97316", blue: "#2563eb",
+            sky: "#0ea5e9", green: "#16a34a", amber: "#f59e0b", red: "#dc2626" };
+const LIGHT = { green: C.green, amber: C.amber, red: C.red };
+const eur = x => (x < 0 ? "−" : "+") + Math.abs(Math.round(x)).toLocaleString("en-GB") + " €";
 const day = s => new Date(s + "T12:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const light = (l, text) => `<span class="light ${l}">${esc(text || WORD[l])}</span>`;
-const mean = a => a.reduce((s, x) => s + x, 0) / a.length;
-const sd = a => { const m = mean(a); return Math.sqrt(a.reduce((s, x) => s + (x - m) ** 2, 0) / (a.length - 1)); };
-const corr = (a, b) => { const ma = mean(a), mb = mean(b); let n = 0, da = 0, db = 0;
-  a.forEach((x, i) => { n += (x - ma) * (b[i] - mb); da += (x - ma) ** 2; db += (b[i] - mb) ** 2; }); return n / Math.sqrt(da * db); };
-const kpi = (label, value, sub, accent) => `<div class="card kpi" style="--accent:${accent}"><div class="kpi-label">${label}</div>
-  <div class="kpi-value">${value}</div><div class="sub">${sub}</div></div>`;
+const cum = a => a.reduce((o, x) => (o.push((o.length ? o[o.length - 1] : 0) + x), o), []);
+const BASE = { margin: { l: 34, r: 8, t: 6, b: 24 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
+               font: { family: "IBM Plex Sans, Arial", size: 11, color: C.grey }, showlegend: false, hovermode: "x unified",
+               xaxis: { gridcolor: C.grid, zeroline: false }, yaxis: { gridcolor: C.grid, zeroline: false } };
+const CFG = { displayModeBar: false, responsive: true };
 
-async function load(src) {
-  try {
-    const r = await fetch(src.url, { cache: "no-store" });
-    if (!r.ok) throw new Error(r.status);
-    return { ...src, ...(await r.json()), live: true };
-  } catch (e) { return { ...src, live: false }; }
+async function load(url) {
+  try { const r = await fetch(url, { cache: "no-store" }); if (!r.ok) throw 0; return await r.json(); } catch (e) { return null; }
+}
+const head = (d, name) => `<div class="top"><span class="dot" style="background:${d && d.status && d.status.ok ? C.green : C.amber}"
+  title="${d ? esc(d.status.text) : "no data"}"></span><a href="${d ? d.url : "#"}">${name} ›</a></div>`;
+const squares = (vals, colour, tip) => `<div class="strip">${vals.map((v, i) =>
+  `<i style="background:${colour(v, i)}" title="${esc(tip(v, i))}"></i>`).join("")}</div>`;
+const sum = a => a.reduce((s, x) => s + x, 0);
+
+function priceCard(d) {
+  if (!d || !d.curve) return `<div class="card off">${head(d, "Price")}<div class="big">–</div></div>`;
+  const f = d.forecast, ds = d.days;
+  const hits = ds ? squares(ds.inside, (v, i) => { const s = v / ds.n[i]; return s >= .9 ? C.green : s >= .75 ? C.amber : C.red; },
+    (v, i) => `${day(ds.dates[i])}: ${v} of ${ds.n[i]} hours inside the 90% range`) : "";
+  return `<div class="card">${head(d, "Price · " + day(f.date))}
+    <div class="big">${f.mean}<small>€/MWh on average</small></div><div class="chart" id="c-price"></div>
+    ${hits}<div class="lbl">${ds ? `last ${ds.inside.length} days · ${Math.round(100 * sum(ds.inside) / sum(ds.n))}% of hours inside the 90% range` : ""}</div></div>`;
+}
+function drawPrice(d) {
+  if (!d || !d.curve) return;
+  const c = d.curve, tr = [];
+  if (c.lo.some(v => v != null))
+    tr.push({ x: c.hour, y: c.hi, mode: "lines", line: { width: 0 }, hoverinfo: "skip" },
+            { x: c.hour, y: c.lo, mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(249,115,22,.18)", hoverinfo: "skip" });
+  tr.push({ x: c.hour, y: c.mean, mode: "lines", line: { color: C.orange, width: 2.5 },
+            customdata: c.lo.map((v, i) => [v, c.hi[i]]), hovertemplate: "%{y:.0f} €/MWh · 9 in 10: %{customdata[0]:.0f}–%{customdata[1]:.0f}<extra></extra>" });
+  Plotly.newPlot("c-price", tr, { ...BASE, xaxis: { ...BASE.xaxis, dtick: 6, ticksuffix: ":00" } }, CFG);
 }
 
-function render(all) {
-  const strategies = all.filter(s => s.live && s.pnl && s.pnl.dates.length);
-  const book = all.filter(s => s.live && s.tomorrow);
-  let html = "";
+function batteryCard(d) {
+  const t = d && d.tomorrow;
+  if (!t) return `<div class="card off">${head(d, "Battery")}<div class="big">–</div><div class="lbl">${d ? esc(d.status.text) : "no data"}</div></div>`;
+  const p = d.pnl, n = p ? p.daily.length : 0, k = n && p.floor ? p.daily.filter((v, i) => v < p.floor[i]).length : 0;
+  const strip = n && p.floor ? squares(p.daily, (v, i) => v < p.floor[i] ? C.red : C.ink,
+    (v, i) => `${day(p.dates[i])}: earned ${eur(v)}, bad day ${eur(p.floor[i])}`) : "";
+  return `<div class="card">${head(d, "Battery · " + day(t.date))}
+    <div class="big">${eur(t.expected)}<span class="bad">bad day ${eur(t.bad)}</span></div><div class="chart" id="c-battery"></div>
+    ${strip}<div class="lbl">last ${n} days · ${k} below the bad day</div></div>`;
+}
+function drawBattery(d) {
+  if (!d || !d.tomorrow || !d.plan) return;
+  const h = [...Array(24).keys()], q = d.plan.q;
+  Plotly.newPlot("c-battery", [
+    { x: h, y: d.plan.price, yaxis: "y2", mode: "lines", line: { color: C.soft, width: 2, shape: "hvh" }, hovertemplate: "price %{y:.0f} €/MWh<extra></extra>" },
+    { x: h, y: q.map(v => v < 0 ? v : null), type: "bar", marker: { color: C.sky }, hovertemplate: "buy %{y:.1f} MWh<extra></extra>" },
+    { x: h, y: q.map(v => v > 0 ? v : null), type: "bar", marker: { color: C.orange }, hovertemplate: "sell %{y:.1f} MWh<extra></extra>" },
+  ], { ...BASE, barmode: "overlay", xaxis: { ...BASE.xaxis, dtick: 6, ticksuffix: ":00" },
+       yaxis: { ...BASE.yaxis, range: [-1.3, 1.3], zeroline: true, zerolinecolor: C.soft, tickvals: [-1, 0, 1], ticktext: ["buy", "0", "sell"] },
+       yaxis2: { overlaying: "y", side: "right", visible: false } }, CFG);
+}
 
-  // the book for the next delivery day, in words
-  if (book.length) {
-    const exp = book.reduce((s, b) => s + b.tomorrow.expected, 0);
-    const bads = book.filter(b => b.tomorrow.bad != null);
-    const bad = bads.reduce((s, b) => s + b.tomorrow.bad, 0) + book.filter(b => b.tomorrow.bad == null).reduce((s, b) => s + b.tomorrow.expected, 0);
-    html += `<div class="card plain"><div class="plain-day">Book for ${day(book[0].tomorrow.date)}</div>
-      <div class="plain-text">We expect to make about ${eur(round5(exp))}. If every strategy has a bad day at once (1 in 20 each), about ${eur(round5(bad))}.</div>
-      <div class="sub">${book.length} ${book.length === 1 ? "strategy" : "strategies"} with a position. Bad days rarely all come together, so this is on the careful side.</div></div>`;
-  } else {
-    html += `<div class="card plain"><div class="plain-text">No positions saved for the next delivery day yet.</div>
-      <div class="sub">The price forecast is made around 10:15, the battery plan and the imbalance positions before 11:00.</div></div>`;
-  }
+function imbalanceCard(d) {
+  if (!d) return `<div class="card off">${head(d, "Imbalance")}<div class="big">–</div></div>`;
+  const t = d.tomorrow, p = d.pnl, n = p ? p.daily.length : 0, up = n ? p.daily.filter(v => v > 0).length : 0;
+  const strip = n ? squares(p.daily, v => v > 0 ? C.green : C.red, (v, i) => `${day(p.dates[i])}: ${eur(v)}`) : "";
+  return `<div class="card">${head(d, "Imbalance · " + (t ? day(t.date) : "next hours"))}
+    <div class="big">${t ? eur(t.expected) : "–"}<small>${t ? "paper, " + day(t.date) : ""}</small></div><div class="chart" id="c-imbalance"></div><div class="lbl" style="margin-top:0">next hours: <b style="color:#f97316">up</b> · none · <b style="color:#2563eb">down</b></div>
+    ${strip}<div class="lbl">last ${n} days · ${up} in profit</div></div>`;
+}
+function drawImbalance(d) {
+  if (!d || !d.hours) return;
+  const h = d.hours;
+  Plotly.newPlot("c-imbalance", [
+    { x: h.time, y: h.down, type: "bar", marker: { color: C.blue }, hovertemplate: "down %{y:.0%}<extra></extra>" },
+    { x: h.time, y: h.down.map((v, i) => 1 - v - h.up[i]), type: "bar", marker: { color: "#e5e7eb" }, hovertemplate: "none %{y:.0%}<extra></extra>" },
+    { x: h.time, y: h.up, type: "bar", marker: { color: C.orange }, hovertemplate: "up %{y:.0%}<extra></extra>" },
+  ], { ...BASE, barmode: "stack", bargap: .15, yaxis: { ...BASE.yaxis, tickformat: ".0%", range: [0, 1], dtick: .5 },
+       xaxis: { ...BASE.xaxis, nticks: 5 } }, CFG);
+}
 
-  // p&l by day across strategies
-  const dates = [...new Set(strategies.flatMap(s => s.pnl.dates))].sort();
-  const by = s => Object.fromEntries(s.pnl.dates.map((d, i) => [d, s.pnl.daily[i]]));
-  const maps = strategies.map(by);
-  const total = dates.map(d => maps.reduce((s, m) => s + (m[d] || 0), 0));
-  const checks = all.filter(s => s.live).flatMap(s => (s.checks || []).map(c => ({ ...c, project: s.name, url: s.url })));
-  const count = l => checks.filter(c => c.light === l).length;
-  if (dates.length) {
-    const sum = total.reduce((s, x) => s + x, 0);
-    const last = dates[dates.length - 1];
-    const lastNames = strategies.filter((s, i) => maps[i][last] != null).map(s => s.name.split(",")[0].split(" (")[0]);
-    html += `<div class="kpis">
-      ${kpi("Paper P&L since launch", eur(sum), `${dates.length} days since ${day(dates[0])}, after fees and wear`, "var(--green)")}
-      ${kpi("Last settled day", eur(total[total.length - 1]), `${day(last)} · ${lastNames.join(" + ")}`, "var(--orange)")}
-      ${kpi("Day to day", "± " + eur(sd(total)), `worst day ${eur(Math.min(...total))}, in profit ${total.filter(x => x > 0).length} of ${dates.length} days`, "var(--blue)")}
-      ${kpi("Checks", `${count("green")} on target`, `${count("amber")} to watch, ${count("red")} off target`, count("red") ? "var(--red)" : "var(--green)")}
-    </div>`;
-  }
+function drawBook(b, im) {
+  const tr = [], add = (dates, y, name, colour, dash) => tr.push({ x: dates, y: cum(y), mode: "lines", name,
+    line: { color: colour, width: dash ? 1.5 : 2.5, dash: dash || "solid" }, hovertemplate: name + " %{y:,.0f} €<extra></extra>" });
+  if (b && b.pnl) add(b.pnl.dates, b.pnl.daily, "Battery", C.orange);
+  if (im && im.pnl) { add(im.pnl.dates, im.pnl.daily, "Imbalance", C.blue);
+                      if (im.pnl.long) add(im.pnl.dates, im.pnl.long, "Always long", C.grey, "dot"); }
+  if (!tr.length) return;
+  const narrow = window.innerWidth < 600;
+  Plotly.newPlot("c-book", tr, { ...BASE, margin: { l: 52, r: narrow ? 10 : 150, t: 8, b: 26 }, showlegend: narrow,
+    legend: { orientation: "h", y: -0.15 }, xaxis: { ...BASE.xaxis, nticks: narrow ? 4 : 10 },
+    yaxis: { ...BASE.yaxis, ticksuffix: " €", zeroline: true, zerolinecolor: C.soft },
+    annotations: narrow ? [] : tr.map(t => ({ x: t.x[t.x.length - 1], y: t.y[t.y.length - 1], xanchor: "left", xshift: 8, showarrow: false,
+      text: `<b>${t.name}</b> ${Math.round(t.y[t.y.length - 1]).toLocaleString("en-GB")} €`, font: { color: t.line.color, size: 12 } })) }, CFG);
+}
 
-  // tomorrow's book
-  const rows = all.filter(s => s.key !== "price" && s.key !== "wind").map(s => {
-    if (!s.live) return `<tr><td>${esc(s.name)}</td><td colspan="3" class="sub">not publishing yet</td><td>${light("off")}</td></tr>`;
-    const t = s.tomorrow;
-    return `<tr><td><a href="${s.url}">${esc(s.name)}</a></td><td>${t ? esc(t.position) : "<span class='sub'>no position</span>"}</td>
-      <td class="n">${t ? eur(t.expected) : "–"}</td><td class="n">${t && t.bad != null ? eur(t.bad) : "–"}</td>
-      <td>${light(s.status.ok ? "green" : "amber", s.status.text)}</td></tr>`;
-  }).join("");
-  const fRows = all.filter(s => s.key === "price" || s.key === "wind").map(s => {
-    if (!s.live) return `<tr><td>${esc(s.name)}</td><td class="sub">not publishing yet</td><td>${light("off")}</td></tr>`;
-    const f = s.forecast;
-    const what = s.key === "price" && f ? `about ${f.mean} €/MWh on average` + (f.uncertain_hour ? `, most uncertain at ${f.uncertain_hour} (${f.lo} to ${f.hi})` : "") : (s.summary || "");
-    return `<tr><td><a href="${s.url}">${esc(s.name)}</a></td><td>${esc(what)}</td><td>${light(s.status.ok ? "green" : "amber", s.status.text)}</td></tr>`;
-  }).join("");
-  html += `<div class="grid2 wide">
-    <div class="card"><div class="card-title">The book</div><div class="scroll"><table>
-      <tr><th>Strategy</th><th>Position</th><th class="n">Expected</th><th class="n">Bad day (1 in 20)</th><th>Status</th></tr>${rows}</table></div>
-      <p class="note">Expected is each strategy's own estimate. Bad day for the imbalance strategy: its worst 1 in 20 days so far.</p></div>
-    <div class="card"><div class="card-title">The forecasts behind it</div><div class="scroll"><table>
-      <tr><th>Forecast</th><th>Next delivery day</th><th>Status</th></tr>${fRows}</table></div></div>
-  </div>`;
-
-  // charts and the per-strategy table
-  if (dates.length) {
-    html += `<div class="grid2"><div class="card"><div class="card-title">Paper P&L since launch, added up</div><div id="cum"></div></div>
-      <div class="card"><div class="card-title">P&L per day, by strategy</div><div id="daily"></div></div></div>`;
-    const stat = (name, a, url) => `<tr${url ? "" : " class='total'"}><td>${url ? `<a href="${url}">${esc(name)}</a>` : name}</td><td class="n">${a.length}</td>
-      <td class="n">${eur(a.reduce((s, x) => s + x, 0))}</td><td class="n">${eur(mean(a))}</td><td class="n">± ${eur(sd(a))}</td>
-      <td class="n">${eur(Math.min(...a))}</td><td class="n">${a.filter(x => x > 0).length} of ${a.length}</td></tr>`;
-    let together = "";
-    if (strategies.length === 2) {
-      const common = dates.filter(d => maps[0][d] != null && maps[1][d] != null);
-      if (common.length >= 10) {
-        const r = corr(common.map(d => maps[0][d]), common.map(d => maps[1][d]));
-        together = `The two strategies move ${Math.abs(r) < 0.2 ? "independently" : r > 0 ? "together" : "against each other"} (correlation ${r.toFixed(2)} over ${common.length} days), so the book swings ${Math.abs(r) < 0.2 ? "less than the sum of its parts" : r > 0 ? "more" : "less"}.`;
-      }
+function health(all) {
+  const rows = [];
+  for (const [key, label] of [["price", "Price"], ["battery", "Battery"], ["imbalance", "Imbalance"]]) {
+    const d = all[key];
+    if (!d || !d.checks) continue;
+    for (const c of d.checks) {
+      if (c.x == null) continue;
+      const pos = v => Math.max(0, Math.min(100, 100 * (v - c.lo) / (c.hi - c.lo)));
+      const col = LIGHT[c.light] || C.grey, a = pos(c.aim), x = pos(c.x);
+      const ci = c.x_lo != null ? `<span class="ci" style="left:${pos(c.x_lo)}%;width:${pos(c.x_hi) - pos(c.x_lo)}%;background:${col};opacity:.5"></span>` : "";
+      rows.push(`<div class="row"><div class="nm">${esc(c.name)}<span>${label}</span></div>
+        <div class="bar" title="${esc(c.name)}: ${esc(c.value)}, aim ${c.aim}">
+          <span class="fill" style="left:${Math.min(a, x)}%;width:${Math.abs(x - a)}%;background:${col}"></span>${ci}
+          <span class="aim" style="left:${a}%"></span><span class="pt" style="left:${x}%;background:${col}"></span></div>
+        <div class="v" style="color:${col}">${esc(c.value)}</div></div>`);
     }
-    html += `<div class="card"><div class="card-title">Each strategy, and the book</div><div class="scroll"><table>
-      <tr><th>Strategy</th><th class="n">Days</th><th class="n">Total</th><th class="n">A day</th><th class="n">Day to day</th><th class="n">Worst day</th><th class="n">In profit</th></tr>
-      ${strategies.map(s => stat(s.name, s.pnl.daily, s.url)).join("")}${stat("The book", total)}</table></div>
-      <p class="note">${together} Few days so far: these numbers can still change a lot.</p></div>`;
   }
-
-  // checks
-  const order = { red: 0, amber: 1, green: 2 };
-  html += `<div class="card"><div class="card-title">Is each number doing what it promised?</div><div class="scroll"><table>
-    <tr><th>Project</th><th>Check</th><th class="n">Now</th><th class="n">Target</th><th>Verdict</th><th>Based on</th></tr>
-    ${checks.sort((a, b) => order[a.light] - order[b.light]).map(c => `<tr><td><a href="${c.url}">${esc(c.project)}</a></td><td>${esc(c.name)}</td>
-      <td class="n">${esc(c.value)}</td><td class="n">${esc(c.target)}</td><td>${light(c.light)}</td><td class="sub">${esc(c.detail || "")}</td></tr>`).join("")}
-    </table></div><p class="note">On target, watch or off target, set by fixed thresholds in each project's code.</p></div>`;
-
-  document.getElementById("main").innerHTML = html;
-  const updated = all.filter(s => s.live).map(s => `${s.name.split(",")[0].split(" (")[0]} ${new Date(s.updated).toLocaleString("en-GB", { timeZone: "Europe/Copenhagen", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}`);
-  document.getElementById("foot").textContent = "Last updates (Danish time): " + updated.join(" · ");
-
-  if (dates.length) {
-    const lay = h => ({ height: h, margin: { l: 55, r: 10, t: 10, b: 30 }, font: { family: "IBM Plex Sans, Arial", size: 12, color: "#6b7280" },
-      paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)", legend: { orientation: "h", y: -0.15 }, hovermode: "x unified",
-      xaxis: { gridcolor: "#f1ebe4" }, yaxis: { gridcolor: "#f1ebe4", zerolinecolor: "#cfc6bb", ticksuffix: " €", tickformat: ",.0f" } });
-    const cfg = { displayModeBar: false, responsive: true };
-    const cum = a => { let s = 0; return a.map(x => (s += x)); };
-    Plotly.newPlot("cum", [
-      ...strategies.map((s, i) => ({ x: dates, y: cum(dates.map(d => maps[i][d] || 0)), name: s.name, mode: "lines", line: { color: s.colour, width: 2 },
-        hovertemplate: "%{y:,.0f} €<extra>" + s.name + "</extra>" })),
-      { x: dates, y: cum(total), name: "The book", mode: "lines", line: { color: "#1f2328", width: 3 }, hovertemplate: "%{y:,.0f} €<extra>The book</extra>" },
-    ], lay(340), cfg);
-    Plotly.newPlot("daily", strategies.map((s, i) => ({ x: dates, y: dates.map(d => maps[i][d] ?? null), name: s.name, type: "bar",
-      marker: { color: s.colour }, hovertemplate: "%{y:,.0f} €<extra>" + s.name + "</extra>" })), { ...lay(340), barmode: "relative" }, cfg);
-  }
+  return rows.join("");
 }
 
-Promise.all(SOURCES.map(load)).then(render);
+(async () => {
+  const keys = Object.keys(SRC), got = await Promise.all(keys.map(k => load(SRC[k])));
+  const all = Object.fromEntries(keys.map((k, i) => [k, got[i]]));
+  const upd = got.filter(Boolean).map(d => d.updated).sort().pop();
+  document.getElementById("when").textContent = upd ? "updated " + new Date(upd.replace("Z", ":00Z")).toLocaleString("en-GB",
+    { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
+  document.getElementById("main").innerHTML = `
+    <h2>Next delivery day</h2>
+    <div class="grid3">${priceCard(all.price)}${batteryCard(all.battery)}${imbalanceCard(all.imbalance)}</div>
+    <h2>P&amp;L since launch</h2>
+    <div class="card"><div class="chart" id="c-book" style="height:260px"></div></div>
+    <h2>Health</h2>
+    <div class="card"><div class="health">${health(all)}</div>
+      <div class="key"><span><b class="dot" style="background:${C.green}"></b>on target</span><span><b class="dot" style="background:${C.amber}"></b>watch</span>
+      <span><b class="dot" style="background:${C.red}"></b>off</span><span><b style="width:2px;height:14px;background:${C.ink}"></b>aim</span></div></div>`;
+  drawPrice(all.price); drawBattery(all.battery); drawImbalance(all.imbalance); drawBook(all.battery, all.imbalance);
+  document.getElementById("foot").innerHTML = `Positions saved before prices were known, never changed · <a href="https://github.com/jacobazu">code</a>`;
+})();
 </script>
 </body>
 </html>
