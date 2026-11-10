@@ -8,18 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
 <style>
-  :root { --ink: #1f2328; --grey: #6b7280; --line: #efe6dc; }
+  :root { --ink: #1f2328; --grey: #6b7280; --line: #e1e4e8; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #faf6f1; color: var(--ink); font: 15px/1.45 "IBM Plex Sans", "Segoe UI", Arial, sans-serif; }
+  body { margin: 0; background: #f4f5f7; color: var(--ink); font: 15px/1.45 "IBM Plex Sans", "Segoe UI", Arial, sans-serif; }
   header { background: #fff; border-bottom: 1px solid var(--line); padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   header h1 { font-size: 18px; margin: 0; }
   header .when { color: var(--grey); font-size: 14px; }
-  header .tag { font-size: 12px; color: #9a3412; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 99px; padding: 1px 10px; }
-  header a { margin-left: auto; color: #c2410c; font-size: 14px; }
+  header .tag { font-size: 12px; color: #0d3a66; background: #eef4fa; border: 1px solid #bcd3ea; border-radius: 99px; padding: 1px 10px; }
+  header a { margin-left: auto; color: #124d85; font-size: 14px; }
   main { max-width: 1240px; margin: 0 auto; padding: 18px 16px 40px; }
   .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   @media (max-width: 960px) { .grid3 { grid-template-columns: 1fr; } }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 4px 14px rgba(120,72,20,.06);
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 4px 14px rgba(16,24,40,0.04);
           padding: 14px 16px; margin-bottom: 16px; min-width: 0; }
   .card.off { opacity: .55; }
   .top { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--grey); }
@@ -41,7 +41,7 @@
   @media (max-width: 600px) {
     .health .row { grid-template-columns: 1fr 64px; grid-template-areas: "nm v" "bar bar"; margin-bottom: 16px; }
   }
-  .bar { position: relative; height: 16px; background: #f4efe9; border-radius: 8px; }
+  .bar { position: relative; height: 16px; background: #eceef1; border-radius: 8px; }
   .bar .fill { position: absolute; top: 0; height: 100%; border-radius: 8px; opacity: .28; }
   .bar .pt { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid #fff; }
   .bar .aim { position: absolute; top: -4px; width: 2px; height: 24px; background: var(--ink); transform: translateX(-1px); }
@@ -64,8 +64,8 @@ const SRC = {
   battery:   "https://jacobazu.github.io/dk1-battery-trade/desk.json",
   imbalance: "https://jacobazu.github.io/dk1-imbalance-forecasting/desk.json",
 };
-const C = { ink: "#1f2328", grey: "#6b7280", soft: "#e7ded3", grid: "#f1ebe4", orange: "#f97316", blue: "#2563eb",
-            sky: "#0ea5e9", green: "#16a34a", amber: "#f59e0b", red: "#dc2626" };
+const C = { ink: "#1f2328", grey: "#6b7280", soft: "#dde1e6", grid: "#eceef1", orange: "#1b66ad", blue: "#c2522d",
+            sky: "#2a9d8f", green: "#16a34a", amber: "#f59e0b", red: "#dc2626" };
 const LIGHT = { green: C.green, amber: C.amber, red: C.red };
 const eur = x => (x < 0 ? "−" : "+") + Math.abs(Math.round(x)).toLocaleString("en-GB") + " €";
 const day = s => new Date(s + "T12:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
@@ -99,7 +99,7 @@ function drawPrice(d) {
   const c = d.curve, tr = [];
   if (c.lo.some(v => v != null))
     tr.push({ x: c.hour, y: c.hi, mode: "lines", line: { width: 0 }, hoverinfo: "skip" },
-            { x: c.hour, y: c.lo, mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(249,115,22,.18)", hoverinfo: "skip" });
+            { x: c.hour, y: c.lo, mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(27,102,173,.18)", hoverinfo: "skip" });
   tr.push({ x: c.hour, y: c.mean, mode: "lines", line: { color: C.orange, width: 2.5 },
             customdata: c.lo.map((v, i) => [v, c.hi[i]]), hovertemplate: "%{y:.0f} €/MWh · 9 in 10: %{customdata[0]:.0f}–%{customdata[1]:.0f}<extra></extra>" });
   Plotly.newPlot("c-price", tr, { ...BASE, xaxis: { ...BASE.xaxis, dtick: 6, ticksuffix: ":00" } }, CFG);
@@ -132,7 +132,7 @@ function imbalanceCard(d) {
   const t = d.tomorrow, p = d.pnl, n = p ? p.daily.length : 0, up = n ? p.daily.filter(v => v > 0).length : 0;
   const strip = n ? squares(p.daily, v => v > 0 ? C.green : C.red, (v, i) => `${day(p.dates[i])}: ${eur(v)}`) : "";
   return `<div class="card">${head(d, "Imbalance · " + (t ? day(t.date) : "next hours"))}
-    <div class="big">${t ? eur(t.expected) : "–"}<small>${t ? "paper, " + day(t.date) : ""}</small></div><div class="chart" id="c-imbalance"></div><div class="lbl" style="margin-top:0">next hours: <b style="color:#f97316">up</b> · none · <b style="color:#2563eb">down</b></div>
+    <div class="big">${t ? eur(t.expected) : "–"}<small>${t ? "paper, " + day(t.date) : ""}</small></div><div class="chart" id="c-imbalance"></div><div class="lbl" style="margin-top:0">next hours: <b style="color:#1b66ad">up</b> · none · <b style="color:#c2522d">down</b></div>
     ${strip}<div class="lbl">last ${n} days · ${up} in profit</div></div>`;
 }
 function drawImbalance(d) {
