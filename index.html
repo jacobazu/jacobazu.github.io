@@ -7,30 +7,27 @@
 <meta name="description" content="Jacob Qazizada, MSc Mathematics-Economics.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f4f5f7;
-    --bg2: #eceef1;
-    --text: #1f2328;
-    --muted: #6b7280;
-    --line: #e1e4e8;
-    --accent: #124d85;
-    --side: #1c1f24;
-    --side-text: #c9ced6;
-    --tag: #eceef1;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #16181c; --bg2: #1b1e23; --text: #e6e6e6; --muted: #9aa0a8; --line: #2c3036;
-            --accent: #4a8bc6; --side: #0f1114; --tag: #2a2e35; }
+    --bg: #0c1c30;
+    --bg2: rgba(255, 255, 255, 0.025);
+    --text: #e9f0f7;
+    --muted: #8fa6bd;
+    --line: rgba(255, 255, 255, 0.1);
+    --accent: #62d6e8;
+    --side: #08131f;
+    --side-text: #c9d6e2;
+    --tag: rgba(255, 255, 255, 0.07);
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: var(--bg);
+    background: radial-gradient(1200px 800px at 75% 0%, #15324f 0%, #0c1c30 55%, #0a1626 100%) fixed #0a1626;
     color: var(--text);
-    font-family: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
     font-size: 16.5px;
     line-height: 1.65;
   }
@@ -39,23 +36,25 @@
 
   /* sidebar */
   aside {
-    position: fixed; inset: 0 auto 0 0; width: 270px; background: var(--side); color: var(--side-text);
+    position: fixed; inset: 0 auto 0 0; width: 270px; background: rgba(4, 12, 22, 0.55); border-right: 1px solid rgba(255, 255, 255, 0.06); color: var(--side-text);
     padding: 40px 28px; display: flex; flex-direction: column; align-items: center; text-align: center;
   }
-  .avatar { width: 112px; height: 112px; border-radius: 50%; border: 6px solid #2c3036; background: var(--accent);
+  .avatar { width: 112px; height: 112px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.12); background: #15324f;
             display: block; object-fit: cover; flex: 0 0 auto; }
-  aside .name { color: #fff; font-size: 22px; font-weight: 600; margin: 16px 0 2px; }
-  aside .role { font-size: 13.5px; color: #9aa0a8; margin: 0 0 18px; }
-  .gh { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: #2c3036; color: #fff;
+  aside .name { color: #fff; font-size: 22px; font-weight: 500; margin: 16px 0 2px; }
+  aside .role { font-size: 13.5px; color: var(--muted); margin: 0 0 18px; }
+  .gh { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); color: #fff;
         align-items: center; justify-content: center; }
-  .gh:hover { background: var(--accent); text-decoration: none; }
+  .gh:hover { background: var(--accent); color: #0c1c30; text-decoration: none; }
   .social { display: flex; gap: 10px; }
   nav { margin-top: 36px; width: 100%; text-align: left; }
-  nav a { display: flex; align-items: center; gap: 12px; color: var(--side-text); padding: 10px 14px;
-          border-radius: 8px; font-size: 15px; margin-bottom: 4px; }
-  nav a:hover, nav a.active { color: #fff; background: #2a2e35; text-decoration: none; }
+  nav a { display: flex; align-items: center; gap: 12px; color: var(--side-text); padding: 9px 16px;
+          border-radius: 99px; font-size: 15px; margin-bottom: 4px; }
+  nav a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); text-decoration: none; }
+  nav a.active { color: #0c1c30; background: var(--text); text-decoration: none; }
+  nav a.active svg { color: #0c1c30 !important; }
   nav a.active svg, nav a:hover svg { color: var(--accent); }
-  nav svg { width: 18px; height: 18px; color: #7d848e; flex: 0 0 18px; }
+  nav svg { width: 18px; height: 18px; color: var(--muted); flex: 0 0 18px; }
   .menu { display: none; }
 
   /* content */
@@ -63,11 +62,11 @@
   section { padding: 88px 8vw 72px; }
   section:nth-of-type(even) { background: var(--bg2); }
   .wrap { max-width: 760px; }
-  h2 { font-size: 26px; font-weight: 600; margin: 0 0 32px; padding-bottom: 14px; position: relative; }
+  h2 { font-size: 28px; font-weight: 500; letter-spacing: -0.015em; margin: 0 0 32px; padding-bottom: 14px; position: relative; }
   h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 48px; height: 3px; background: var(--accent);
               border-radius: 2px; }
   #home { min-height: 70vh; display: flex; align-items: center; }
-  #home h1 { font-size: 44px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.015em; }
+  #home h1 { font-size: 52px; font-weight: 500; margin: 0 0 8px; letter-spacing: -0.03em; line-height: 1.05; }
   #home .sub { color: var(--muted); margin: 0 0 28px; font-size: 18px; }
   #home .intro { font-size: 20px; max-width: 560px; margin: 0; }
 
@@ -75,16 +74,15 @@
   .item { position: relative; padding: 0 0 44px 30px; border-left: 2px solid var(--line); }
   .item:last-of-type { padding-bottom: 6px; }
   .item::before { content: ""; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; border-radius: 50%;
-                  background: var(--bg); border: 2px solid var(--accent); }
-  section:nth-of-type(even) .item::before { background: var(--bg2); }
-  .item h3 { font-size: 19px; font-weight: 600; margin: 0 0 6px; line-height: 1.4; }
+                  background: #0c1c30; border: 2px solid var(--accent); }
+  section:nth-of-type(even) .item::before { background: #0d1e33; }
+  .item h3 { font-size: 19px; font-weight: 500; margin: 0 0 6px; line-height: 1.4; }
   .tags { margin: 0 0 10px; }
   .tag { display: inline-block; font-size: 12.5px; color: var(--muted); background: var(--tag); border-radius: 999px;
          padding: 1px 10px; margin-right: 6px; }
-  .tag.live { color: #166534; background: #dcfce7; }
-  @media (prefers-color-scheme: dark) { .tag.live { color: #86efac; background: #14361f; } }
+  .tag.live { color: #7fe3ae; background: rgba(79, 208, 138, 0.14); }
   .tag.live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-                      background: #16a34a; margin: 0 6px 1px 0; }
+                      background: #4fd08a; margin: 0 6px 1px 0; box-shadow: 0 0 0 3px rgba(79, 208, 138, 0.18); }
   .item p { margin: 0 0 10px; }
   .note { color: var(--muted); font-size: 15px; }
   .note b { color: var(--text); font-weight: 500; }
@@ -108,10 +106,10 @@
 
   /* a folder of projects: click to fold out */
   details.folder { color: var(--text); margin: 0 0 36px; border: 1px solid var(--line); border-radius: 14px;
-                   padding: 18px 22px; background: var(--bg); }
-  section:nth-of-type(even) details.folder { background: var(--bg); }
+                   padding: 18px 22px; background: rgba(255, 255, 255, 0.035); }
+  section:nth-of-type(even) details.folder { background: rgba(255, 255, 255, 0.035); }
   details.folder > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; color: var(--text);
-                             font-size: 19px; font-weight: 600; }
+                             font-size: 19px; font-weight: 500; }
   details.folder > summary::before { align-self: center; color: var(--accent); }
   details.folder > summary:hover { text-decoration: none; color: var(--accent); }
   details.folder > summary .sub { font-size: 15px; font-weight: 400; color: var(--muted); }
@@ -122,7 +120,7 @@
 
   /* phones: the sidebar becomes a bar at the top with a menu */
   @media (max-width: 860px) {
-    aside { position: sticky; top: 0; width: 100%; flex-direction: row; flex-wrap: wrap; align-items: center;
+    aside { position: sticky; top: 0; width: 100%; background: #08131f; flex-direction: row; flex-wrap: wrap; align-items: center;
             padding: 10px 16px; text-align: left; z-index: 10; gap: 0 10px; }
     .avatar { width: 40px; height: 40px; border-width: 2px; }
     aside .name { font-size: 16px; margin: 0; }
