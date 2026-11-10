@@ -80,9 +80,9 @@
   .tags { margin: 0 0 10px; }
   .tag { display: inline-block; font-size: 12.5px; color: var(--muted); background: var(--tag); border-radius: 999px;
          padding: 1px 10px; margin-right: 6px; }
-  .tag.live { color: #7fe3ae; background: rgba(79, 208, 138, 0.14); }
+  .tag.live { color: #062a17; background: #5ee39a; font-weight: 600; }
   .tag.live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-                      background: #4fd08a; margin: 0 6px 1px 0; box-shadow: 0 0 0 3px rgba(79, 208, 138, 0.18); }
+                      background: #062a17; margin: 0 6px 1px 0; animation: pulse 2s ease-in-out infinite; }
   .item p { margin: 0 0 10px; }
   .note { color: var(--muted); font-size: 15px; }
   .note b { color: var(--text); font-weight: 500; }
@@ -102,6 +102,8 @@
   details img { display: block; width: 240px; max-width: 100%; margin-top: 16px; border-radius: 12px; }
   details p { margin-top: 10px; font-size: 15px; }
   details[open] img, details[open] p { animation: fold .3s ease-out; }
+  @keyframes pulse { 50% { opacity: .35; } }
+  @media (prefers-reduced-motion: reduce) { .tag.live::before { animation: none; } }
   @keyframes fold { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 
   /* a folder of projects: click to fold out */
