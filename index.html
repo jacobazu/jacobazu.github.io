@@ -10,49 +10,50 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0c1c30;
-    --bg2: rgba(255, 255, 255, 0.025);
-    --text: #e9f0f7;
-    --muted: #8fa6bd;
-    --line: rgba(255, 255, 255, 0.1);
-    --accent: #62d6e8;
-    --side: #08131f;
-    --side-text: #c9d6e2;
-    --tag: rgba(255, 255, 255, 0.07);
-    color-scheme: dark;
+    --bg: #ffffff;
+    --bg2: #faf8f6;
+    --text: #1c1917;
+    --muted: #78716c;
+    --line: #e7e5e4;
+    --accent: #c0800c;
+    --link: #9a5b06;
+    --side: #faf8f6;
+    --side-text: #44403c;
+    --tag: #f5f2ef;
+    color-scheme: light;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    background: radial-gradient(1200px 800px at 75% 0%, #15324f 0%, #0c1c30 55%, #0a1626 100%) fixed #0a1626;
+    background: #ffffff;
     color: var(--text);
     font-family: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
     font-size: 16.5px;
     line-height: 1.65;
   }
-  a { color: var(--accent); text-decoration: none; }
+  a { color: var(--link); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
   /* sidebar */
   aside {
-    position: fixed; inset: 0 auto 0 0; width: 270px; background: rgba(4, 12, 22, 0.55); border-right: 1px solid rgba(255, 255, 255, 0.06); color: var(--side-text);
+    position: fixed; inset: 0 auto 0 0; width: 270px; background: var(--side); border-right: 1px solid var(--line); color: var(--side-text);
     padding: 40px 28px; display: flex; flex-direction: column; align-items: center; text-align: center;
   }
-  .avatar { width: 112px; height: 112px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.12); background: #15324f;
+  .avatar { width: 112px; height: 112px; border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 0 0 1px var(--line); background: #f5f2ef;
             display: block; object-fit: cover; flex: 0 0 auto; }
-  aside .name { color: #fff; font-size: 22px; font-weight: 500; margin: 16px 0 2px; }
+  aside .name { color: var(--text); font-size: 22px; font-weight: 500; margin: 16px 0 2px; }
   aside .role { font-size: 13.5px; color: var(--muted); margin: 0 0 18px; }
-  .gh { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: rgba(255, 255, 255, 0.08); color: #fff;
+  .gh { display: inline-flex; width: 38px; height: 38px; border-radius: 50%; background: #ffffff; border: 1px solid var(--line); color: var(--text);
         align-items: center; justify-content: center; }
-  .gh:hover { background: var(--accent); color: #0c1c30; text-decoration: none; }
+  .gh:hover { background: var(--text); color: #ffffff; text-decoration: none; }
   .social { display: flex; gap: 10px; }
   nav { margin-top: 36px; width: 100%; text-align: left; }
   nav a { display: flex; align-items: center; gap: 12px; color: var(--side-text); padding: 9px 16px;
           border-radius: 99px; font-size: 15px; margin-bottom: 4px; }
-  nav a:hover { color: #fff; background: rgba(255, 255, 255, 0.06); text-decoration: none; }
-  nav a.active { color: #0c1c30; background: var(--text); text-decoration: none; }
-  nav a.active svg { color: #0c1c30 !important; }
+  nav a:hover { color: var(--text); background: #f0ece8; text-decoration: none; }
+  nav a.active { color: #ffffff; background: var(--text); text-decoration: none; }
+  nav a.active svg { color: #ffffff !important; }
   nav a.active svg, nav a:hover svg { color: var(--accent); }
   nav svg { width: 18px; height: 18px; color: var(--muted); flex: 0 0 18px; }
   .menu { display: none; }
@@ -74,15 +75,15 @@
   .item { position: relative; padding: 0 0 44px 30px; border-left: 2px solid var(--line); }
   .item:last-of-type { padding-bottom: 6px; }
   .item::before { content: ""; position: absolute; left: -8px; top: 6px; width: 14px; height: 14px; border-radius: 50%;
-                  background: #0c1c30; border: 2px solid var(--accent); }
-  section:nth-of-type(even) .item::before { background: #0d1e33; }
+                  background: #ffffff; border: 2px solid var(--accent); }
+  section:nth-of-type(even) .item::before { background: var(--bg2); }
   .item h3 { font-size: 19px; font-weight: 500; margin: 0 0 6px; line-height: 1.4; }
   .tags { margin: 0 0 10px; }
   .tag { display: inline-block; font-size: 12.5px; color: var(--muted); background: var(--tag); border-radius: 999px;
          padding: 1px 10px; margin-right: 6px; }
-  .tag.live { color: #062a17; background: #5ee39a; font-weight: 600; }
+  .tag.live { color: #ffffff; background: #15803d; font-weight: 600; }
   .tag.live::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-                      background: #062a17; margin: 0 6px 1px 0; animation: pulse 2s ease-in-out infinite; }
+                      background: #ffffff; margin: 0 6px 1px 0; animation: pulse 2s ease-in-out infinite; }
   .item p { margin: 0 0 10px; }
   .note { color: var(--muted); font-size: 15px; }
   .note b { color: var(--text); font-weight: 500; }
@@ -108,8 +109,8 @@
 
   /* a folder of projects: click to fold out */
   details.folder { color: var(--text); margin: 0 0 36px; border: 1px solid var(--line); border-radius: 14px;
-                   padding: 18px 22px; background: rgba(255, 255, 255, 0.035); }
-  section:nth-of-type(even) details.folder { background: rgba(255, 255, 255, 0.035); }
+                   padding: 18px 22px; background: #ffffff; }
+  section:nth-of-type(even) details.folder { background: #ffffff; }
   details.folder > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; color: var(--text);
                              font-size: 19px; font-weight: 500; }
   details.folder > summary::before { align-self: center; color: var(--accent); }
@@ -122,14 +123,14 @@
 
   /* phones: the sidebar becomes a bar at the top with a menu */
   @media (max-width: 860px) {
-    aside { position: sticky; top: 0; width: 100%; background: #08131f; flex-direction: row; flex-wrap: wrap; align-items: center;
+    aside { position: sticky; top: 0; width: 100%; background: #ffffff; border-bottom: 1px solid var(--line); flex-direction: row; flex-wrap: wrap; align-items: center;
             padding: 10px 16px; text-align: left; z-index: 10; gap: 0 10px; }
     .avatar { width: 40px; height: 40px; border-width: 2px; }
     aside .name { font-size: 16px; margin: 0; }
     aside .role { display: none; }
     .gh { width: 30px; height: 30px; }
     .social { margin-left: auto; gap: 6px; }
-    .menu { display: inline-flex; background: none; border: 0; color: #fff; padding: 4px; cursor: pointer; }
+    .menu { display: inline-flex; background: none; border: 0; color: var(--text); padding: 4px; cursor: pointer; }
     nav { display: none; margin-top: 8px; }
     nav.open { display: block; }
     main { margin-left: 0; }
