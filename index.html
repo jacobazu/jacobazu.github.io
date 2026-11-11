@@ -141,6 +141,22 @@
   }
   /* very small phones: no room for the photo */
   @media (max-width: 359px) { .avatar { display: none; } }
+  /* live strip on the front page, filled from each project's own published files */
+  .glance { margin-top: 40px; max-width: 980px; }
+  .glance .hd { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+  .glance .hd b { font-size: 17px; font-weight: 600; }
+  .glance .hd span { color: var(--muted); font-size: 14px; }
+  .glance .hd a { margin-left: auto; font-weight: 500; }
+  .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 1100px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .tiles { grid-template-columns: 1fr; } }
+  .tile { display: block; border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; color: var(--text); background: #fff; }
+  .tile:hover { border-color: var(--accent); text-decoration: none; }
+  .tile .k { font-size: 13.5px; color: var(--muted); }
+  .tile .v { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 2px 0; font-variant-numeric: tabular-nums; }
+  .tile .s { font-size: 13px; color: var(--muted); line-height: 1.35; }
+  .tile.off .v { color: var(--muted); }
+  .tile .v small { font-size: 15px; font-weight: 500; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -171,6 +187,10 @@
       <h1>Hi, I'm Jacob.</h1>
       <p class="sub">MSc Mathematics-Economics, Aalborg University (2026)</p>
       <p class="intro">I live in Aarhus with my cat. Just building stuff that piques my interest.</p>
+      <div class="glance" aria-live="polite">
+        <div class="hd"><b>Running now</b><span id="g-when">forecasts and paper trades saved every morning before the auction</span><a href="desk/">Open the desk</a></div>
+        <div class="tiles" id="tiles"></div>
+      </div>
     </div>
   </section>
 
@@ -291,6 +311,37 @@
     if (e.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
   }), { rootMargin: "-45% 0px -50% 0px" });
   document.querySelectorAll("main section").forEach(s => seen.observe(s));
+
+  // running-now tiles: each project publishes its own numbers, the page only reads them
+  (async () => {
+    const get = async (u, kind) => { try { const r = await fetch(u, { cache: "no-store" }); if (!r.ok) throw 0; return kind === "csv" ? await r.text() : await r.json(); } catch (e) { return null; } };
+    const [pr, ba, im, cb] = await Promise.all([
+      get("https://jacobazu.github.io/dk1-price-forecasting/desk.json"), get("https://jacobazu.github.io/dk1-battery-trade/desk.json"),
+      get("https://jacobazu.github.io/dk1-imbalance-forecasting/desk.json"),
+      get("https://raw.githubusercontent.com/jacobazu/dk1-model-comparison/main/results/combos.csv", "csv")]);
+    const sum = a => a.reduce((x, y) => x + y, 0), eur = x => (x < 0 ? "−" : "+") + Math.abs(Math.round(x)).toLocaleString("en-GB") + " €";
+    const day = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+    const tile = (href, k, v, sub, ok) => `<a class="tile${ok ? "" : " off"}" href="${href}"><div class="k">${k}</div><div class="v">${ok ? v : "–"}</div><div class="s">${ok ? sub : "not updated yet"}</div></a>`;
+    const t = [];
+    const f = pr && pr.forecast, ds = pr && pr.days;
+    t.push(tile("https://jacobazu.github.io/dk1-price-forecasting/", "DK1 price" + (f ? ", " + day(f.date) : ""), f ? Math.round(f.mean) + "<small> €/MWh</small>" : "",
+      ds ? `forecast average. Last ${ds.n.length} days: ${Math.round(100 * sum(ds.inside) / sum(ds.n))}% of hours inside the 90% range` : "forecast average", !!f));
+    const bp = ba && ba.pnl;
+    t.push(tile("https://jacobazu.github.io/dk1-battery-trade/", "Battery, paper P&amp;L", bp ? eur(sum(bp.daily)) : "",
+      bp ? `over ${bp.daily.length} days, 1 MW / 2 MWh, after fees` : "", !!bp));
+    const ip = im && im.pnl;
+    t.push(tile("https://jacobazu.github.io/dk1-imbalance-forecasting/", "Imbalance, paper P&amp;L", ip ? eur(sum(ip.daily)) : "",
+      ip ? `over ${ip.daily.length} days` + (ip.long ? `, against ${eur(sum(ip.long))} for always long` : "") : "", !!ip));
+    let cm = null;
+    if (cb) {
+      const rows = cb.trim().split("\n"), h = rows[0].split(","), i = n => h.indexOf(n);
+      const r = rows.slice(1).map(l => l.split(",")), best = r[0], today = r.find(x => x[i("p_vs_today")] === "");
+      if (best && today) cm = { n: r.length, gain: 100 * (1 - (+best[i("mae")]) / (+today[i("mae")])) };
+    }
+    t.push(tile("https://jacobazu.github.io/dk1-model-comparison/", "Models tested", cm ? cm.n + " mixes" : "",
+      cm ? `the best is ${Math.round(cm.gain)}% more accurate than the live forecast on the same backtest days` : "", !!cm));
+    document.getElementById("tiles").innerHTML = t.join("");
+  })();
 </script>
 </body>
 </html>

@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DK1 desk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
 <style>
-  :root { --ink: #1f2328; --grey: #6b7280; --line: #e1e4e8; }
+  :root { --ink: #1c1917; --grey: #78716c; --line: #ebe7e3; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: #f4f5f7; color: var(--ink); font: 15px/1.45 "IBM Plex Sans", "Segoe UI", Arial, sans-serif; }
+  body { margin: 0; background: #ffffff; color: var(--ink); font: 15px/1.45 "Instrument Sans", system-ui, Arial, sans-serif; }
   header { background: #fff; border-bottom: 1px solid var(--line); padding: 12px 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
   header h1 { font-size: 18px; margin: 0; }
   header .when { color: var(--grey); font-size: 14px; }
-  header .tag { font-size: 12px; color: #0d3a66; background: #eef4fa; border: 1px solid #bcd3ea; border-radius: 99px; padding: 1px 10px; }
-  header a { margin-left: auto; color: #124d85; font-size: 14px; }
+  header .tag { font-size: 12px; color: #9a5b06; background: #fbf3e4; border: 1px solid #ecd3a6; border-radius: 99px; padding: 1px 10px; }
+  header a { margin-left: auto; color: #9a5b06; font-size: 14px; }
   main { max-width: 1240px; margin: 0 auto; padding: 18px 16px 40px; }
   .grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   @media (max-width: 960px) { .grid3 { grid-template-columns: 1fr; } }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 4px 14px rgba(16,24,40,0.04);
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: none;
           padding: 14px 16px; margin-bottom: 16px; min-width: 0; }
   .card.off { opacity: .55; }
   .top { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--grey); }
@@ -27,12 +27,12 @@
   .dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; display: inline-block; }
   .big { font-size: 30px; font-weight: 650; font-variant-numeric: tabular-nums; margin: 2px 0 0; }
   .big small { font-size: 14px; font-weight: 500; color: var(--grey); margin-left: 6px; }
-  .big .bad { font-size: 16px; color: #dc2626; margin-left: 10px; font-weight: 600; }
+  .big .bad { font-size: 16px; color: #b91c1c; margin-left: 10px; font-weight: 600; }
   .chart { height: 170px; }
   .strip { display: flex; gap: 3px; margin-top: 6px; height: 18px; }
   .strip i { flex: 1 1 0; max-width: 12px; border-radius: 2px; }
   .lbl { font-size: 12px; color: var(--grey); margin-top: 6px; }
-  h2 { font-size: 13px; font-weight: 600; color: var(--grey); margin: 6px 2px 10px; text-transform: uppercase; letter-spacing: .05em; }
+  h2 { font-size: 16px; font-weight: 600; color: var(--grey); margin: 6px 2px 10px;  }
   .health .row { display: grid; grid-template-columns: minmax(140px, 220px) 1fr 64px; grid-template-areas: "nm bar v";
                  gap: 6px 14px; align-items: center; margin-bottom: 12px; }
   .health .nm { grid-area: nm; } .health .bar { grid-area: bar; } .health .v { grid-area: v; }
@@ -41,7 +41,7 @@
   @media (max-width: 600px) {
     .health .row { grid-template-columns: 1fr 64px; grid-template-areas: "nm v" "bar bar"; margin-bottom: 16px; }
   }
-  .bar { position: relative; height: 16px; background: #eceef1; border-radius: 8px; }
+  .bar { position: relative; height: 16px; background: #f0ece8; border-radius: 8px; }
   .bar .fill { position: absolute; top: 0; height: 100%; border-radius: 8px; opacity: .28; }
   .bar .pt { position: absolute; top: 50%; width: 15px; height: 15px; border-radius: 50%; transform: translate(-50%, -50%); border: 2px solid #fff; }
   .bar .aim { position: absolute; top: -4px; width: 2px; height: 24px; background: var(--ink); transform: translateX(-1px); }
@@ -50,10 +50,12 @@
   .key b { display: inline-block; vertical-align: middle; margin-right: 5px; }
   footer { color: var(--grey); font-size: 12px; text-align: center; padding-bottom: 24px; }
   footer a { color: inherit; }
+  .links { display: flex; gap: 10px 28px; flex-wrap: wrap; font-weight: 500; }
+  .links a { color: #9a5b06; text-decoration: none; }
 </style>
 </head>
 <body>
-<header><h1>DK1 desk</h1><span class="when" id="when"></span><span class="tag">WIP · paper money</span>
+<header><h1>DK1 desk</h1><span class="when" id="when"></span><span class="tag">paper money</span>
 <a href="https://jacobazu.github.io/">jacobazu.github.io</a></header>
 <main id="main"><div class="card">Loading…</div></main>
 <footer id="foot"></footer>
@@ -64,17 +66,19 @@ const SRC = {
   battery:   "https://jacobazu.github.io/dk1-battery-trade/desk.json",
   imbalance: "https://jacobazu.github.io/dk1-imbalance-forecasting/desk.json",
 };
-const C = { ink: "#1f2328", grey: "#6b7280", soft: "#dde1e6", grid: "#eceef1", orange: "#1b66ad", blue: "#c2522d",
-            sky: "#2a9d8f", green: "#16a34a", amber: "#f59e0b", red: "#dc2626" };
+const C = { ink: "#1c1917", grey: "#78716c", soft: "#d6d3d1", grid: "#f0ece8", orange: "#c0800c", blue: "#1c7fb0",
+            sky: "#1c7fb0", green: "#15803d", amber: "#b45309", red: "#b91c1c" };
 const LIGHT = { green: C.green, amber: C.amber, red: C.red };
 const eur = x => (x < 0 ? "−" : "+") + Math.abs(Math.round(x)).toLocaleString("en-GB") + " €";
 const day = s => new Date(s + "T12:00:00").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const cum = a => a.reduce((o, x) => (o.push((o.length ? o[o.length - 1] : 0) + x), o), []);
 const BASE = { margin: { l: 34, r: 8, t: 6, b: 24 }, paper_bgcolor: "rgba(0,0,0,0)", plot_bgcolor: "rgba(0,0,0,0)",
-               font: { family: "IBM Plex Sans, Arial", size: 11, color: C.grey }, showlegend: false, hovermode: "x unified",
+               font: { family: "Instrument Sans, Arial", size: 11, color: C.grey }, showlegend: false, hovermode: "x unified",
                xaxis: { gridcolor: C.grid, zeroline: false }, yaxis: { gridcolor: C.grid, zeroline: false } };
 const CFG = { displayModeBar: false, responsive: true };
+const plot = (id, tr, lay) => Plotly.newPlot(id, tr, structuredClone(lay), CFG);
+const num = a => (a || []).map(v => v == null || v === "NA" ? null : +v);   // older files wrote missing values as "NA"
 
 async function load(url) {
   try { const r = await fetch(url, { cache: "no-store" }); if (!r.ok) throw 0; return await r.json(); } catch (e) { return null; }
@@ -96,13 +100,13 @@ function priceCard(d) {
 }
 function drawPrice(d) {
   if (!d || !d.curve) return;
-  const c = d.curve, tr = [];
+  const c = { hour: d.curve.hour, mean: num(d.curve.mean), lo: num(d.curve.lo), hi: num(d.curve.hi) }, tr = [];
   if (c.lo.some(v => v != null))
     tr.push({ x: c.hour, y: c.hi, mode: "lines", line: { width: 0 }, hoverinfo: "skip" },
-            { x: c.hour, y: c.lo, mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(27,102,173,.18)", hoverinfo: "skip" });
+            { x: c.hour, y: c.lo, mode: "lines", line: { width: 0 }, fill: "tonexty", fillcolor: "rgba(192,128,12,.16)", hoverinfo: "skip" });
   tr.push({ x: c.hour, y: c.mean, mode: "lines", line: { color: C.orange, width: 2.5 },
             customdata: c.lo.map((v, i) => [v, c.hi[i]]), hovertemplate: "%{y:.0f} €/MWh · 9 in 10: %{customdata[0]:.0f}–%{customdata[1]:.0f}<extra></extra>" });
-  Plotly.newPlot("c-price", tr, { ...BASE, xaxis: { ...BASE.xaxis, dtick: 6, ticksuffix: ":00" } }, CFG);
+  plot("c-price", tr, { ...BASE, xaxis: { ...BASE.xaxis, dtick: 6, ticksuffix: ":00" }, yaxis: { ...BASE.yaxis, type: "linear" } });
 }
 
 function batteryCard(d) {
@@ -118,13 +122,13 @@ function batteryCard(d) {
 function drawBattery(d) {
   if (!d || !d.tomorrow || !d.plan) return;
   const h = [...Array(24).keys()], q = d.plan.q;
-  Plotly.newPlot("c-battery", [
+  plot("c-battery", [
     { x: h, y: d.plan.price, yaxis: "y2", mode: "lines", line: { color: C.soft, width: 2, shape: "hvh" }, hovertemplate: "price %{y:.0f} €/MWh<extra></extra>" },
     { x: h, y: q.map(v => v < 0 ? v : null), type: "bar", marker: { color: C.sky }, hovertemplate: "buy %{y:.1f} MWh<extra></extra>" },
     { x: h, y: q.map(v => v > 0 ? v : null), type: "bar", marker: { color: C.orange }, hovertemplate: "sell %{y:.1f} MWh<extra></extra>" },
   ], { ...BASE, barmode: "overlay", xaxis: { ...BASE.xaxis, dtick: 6, ticksuffix: ":00" },
        yaxis: { ...BASE.yaxis, range: [-1.3, 1.3], zeroline: true, zerolinecolor: C.soft, tickvals: [-1, 0, 1], ticktext: ["buy", "0", "sell"] },
-       yaxis2: { overlaying: "y", side: "right", visible: false } }, CFG);
+       yaxis2: { overlaying: "y", side: "right", visible: false } });
 }
 
 function imbalanceCard(d) {
@@ -132,18 +136,18 @@ function imbalanceCard(d) {
   const t = d.tomorrow, p = d.pnl, n = p ? p.daily.length : 0, up = n ? p.daily.filter(v => v > 0).length : 0;
   const strip = n ? squares(p.daily, v => v > 0 ? C.green : C.red, (v, i) => `${day(p.dates[i])}: ${eur(v)}`) : "";
   return `<div class="card">${head(d, "Imbalance · " + (t ? day(t.date) : "next hours"))}
-    <div class="big">${t ? eur(t.expected) : "–"}<small>${t ? "paper, " + day(t.date) : ""}</small></div><div class="chart" id="c-imbalance"></div><div class="lbl" style="margin-top:0">next hours: <b style="color:#1b66ad">up</b> · none · <b style="color:#c2522d">down</b></div>
+    <div class="big">${t ? eur(t.expected) : "–"}<small>${t ? "paper, " + day(t.date) : ""}</small></div><div class="chart" id="c-imbalance"></div><div class="lbl" style="margin-top:0">next hours: <b style="color:#c0800c">up</b>, none, <b style="color:#1c7fb0">down</b></div>
     ${strip}<div class="lbl">last ${n} days · ${up} in profit</div></div>`;
 }
 function drawImbalance(d) {
   if (!d || !d.hours) return;
   const h = d.hours;
-  Plotly.newPlot("c-imbalance", [
+  plot("c-imbalance", [
     { x: h.time, y: h.down, type: "bar", marker: { color: C.blue }, hovertemplate: "down %{y:.0%}<extra></extra>" },
-    { x: h.time, y: h.down.map((v, i) => 1 - v - h.up[i]), type: "bar", marker: { color: "#e5e7eb" }, hovertemplate: "none %{y:.0%}<extra></extra>" },
+    { x: h.time, y: h.down.map((v, i) => 1 - v - h.up[i]), type: "bar", marker: { color: "#ebe7e3" }, hovertemplate: "none %{y:.0%}<extra></extra>" },
     { x: h.time, y: h.up, type: "bar", marker: { color: C.orange }, hovertemplate: "up %{y:.0%}<extra></extra>" },
   ], { ...BASE, barmode: "stack", bargap: .15, yaxis: { ...BASE.yaxis, tickformat: ".0%", range: [0, 1], dtick: .5 },
-       xaxis: { ...BASE.xaxis, nticks: 5 } }, CFG);
+       xaxis: { ...BASE.xaxis, nticks: 5, type: "category" } });
 }
 
 function drawBook(b, im) {
@@ -154,11 +158,11 @@ function drawBook(b, im) {
                       if (im.pnl.long) add(im.pnl.dates, im.pnl.long, "Always long", C.grey, "dot"); }
   if (!tr.length) return;
   const narrow = window.innerWidth < 600;
-  Plotly.newPlot("c-book", tr, { ...BASE, margin: { l: 52, r: narrow ? 10 : 150, t: 8, b: 26 }, showlegend: narrow,
+  plot("c-book", tr, { ...BASE, margin: { l: 52, r: narrow ? 10 : 150, t: 8, b: 26 }, showlegend: narrow,
     legend: { orientation: "h", y: -0.15 }, xaxis: { ...BASE.xaxis, nticks: narrow ? 4 : 10 },
-    yaxis: { ...BASE.yaxis, ticksuffix: " €", zeroline: true, zerolinecolor: C.soft },
+    yaxis: { ...BASE.yaxis, type: "linear", ticksuffix: " €", zeroline: true, zerolinecolor: C.soft },
     annotations: narrow ? [] : tr.map(t => ({ x: t.x[t.x.length - 1], y: t.y[t.y.length - 1], xanchor: "left", xshift: 8, showarrow: false,
-      text: `<b>${t.name}</b> ${Math.round(t.y[t.y.length - 1]).toLocaleString("en-GB")} €`, font: { color: t.line.color, size: 12 } })) }, CFG);
+      text: `<b>${t.name}</b> ${Math.round(t.y[t.y.length - 1]).toLocaleString("en-GB")} €`, font: { color: t.line.color, size: 12 } })) });
 }
 
 function health(all) {
@@ -195,7 +199,11 @@ function health(all) {
     <h2>Health</h2>
     <div class="card"><div class="health">${health(all)}</div>
       <div class="key"><span><b class="dot" style="background:${C.green}"></b>on target</span><span><b class="dot" style="background:${C.amber}"></b>watch</span>
-      <span><b class="dot" style="background:${C.red}"></b>off</span><span><b style="width:2px;height:14px;background:${C.ink}"></b>aim</span></div></div>`;
+      <span><b class="dot" style="background:${C.red}"></b>off</span><span><b style="width:2px;height:14px;background:${C.ink}"></b>aim</span></div></div>
+    <h2>Also running</h2>
+    <div class="card links"><a href="https://jacobazu.github.io/dk1-renewables-forecasting/">Offshore wind forecast ›</a>
+      <a href="https://jacobazu.github.io/dk1-model-comparison/">Every model tested ›</a>
+      <a href="https://jacobazu.github.io/ppa/">PPA pricing ›</a><a href="https://jacobazu.github.io/">About me ›</a></div>`;
   drawPrice(all.price); drawBattery(all.battery); drawImbalance(all.imbalance); drawBook(all.battery, all.imbalance);
   document.getElementById("foot").innerHTML = `Positions saved before prices were known, never changed · <a href="https://github.com/jacobazu">code</a>`;
 })();
