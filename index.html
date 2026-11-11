@@ -338,7 +338,7 @@
       const r = rows.slice(1).map(l => l.split(",")), best = r[0], today = r.find(x => x[i("p_vs_today")] === "");
       if (best && today) cm = { n: r.length, gain: 100 * (1 - (+best[i("mae")]) / (+today[i("mae")])) };
     }
-    t.push(tile("https://jacobazu.github.io/dk1-model-comparison/", "Models tested", cm ? cm.n + " mixes" : "",
+    t.push(tile("https://jacobazu.github.io/models/", "Models tested", cm ? cm.n + " mixes" : "",
       cm ? `the best is ${Math.round(cm.gain)}% more accurate than the live forecast on the same backtest days` : "", !!cm));
     document.getElementById("tiles").innerHTML = t.join("");
   })();
